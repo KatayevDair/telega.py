@@ -21,7 +21,7 @@ import io
 import re
 from matplotlib import rcParams
 
-bot = telegram.Bot(token='5637376738:AAEliHovXHBx6O_0pKcIRePBgEOR8S9N8xU' )
+bot = telegram.Bot(token=BOT_TOKEN)
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
 )
@@ -97,7 +97,7 @@ def Monday_submenu(update,context):
     query.answer()
     day = update.callback_query.data.split(',')[0]
     time = update.callback_query.data.split(',')[1]
-    free_cabs = pd.read_excel(r'C:\Users\Dair\Desktop\magnum\Free Cabinets.xlsx', header = 2)#
+    free_cabs = pd.read_excel(YOUR_PATH, header = 2)#
     free_cabs['Time'] = free_cabs['Time'].apply(lambda x: '0' + x if len(x) < 18 else x)
     free_cabs['begin'] = free_cabs['Time'].apply(lambda x: x[0:8])
     free_cabs['begin'] = pd.to_datetime(free_cabs['begin'], format='%H:%M:%S').dt.time
@@ -701,7 +701,7 @@ def unknown(update: Update, context: CallbackContext):
         "Извини, но нет такой команды %s" % update.message.text)
 if __name__ == '__main__':
 
-    updater = Updater("5637376738:AAEliHovXHBx6O_0pKcIRePBgEOR8S9N8xU")
+    updater = Updater(BOT_TOKEN)
 
     dispatcher = updater.dispatcher
     updater.dispatcher.add_handler(CommandHandler('start', start))

@@ -25,19 +25,10 @@ bot = telegram.Bot(token='5637376738:AAEliHovXHBx6O_0pKcIRePBgEOR8S9N8xU' )
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
 )
-
-
 logger = logging.getLogger(__name__)
 
-# Определяем константы этапов разговора
 PLOT, GENDER, PHOTO, LOCATION, BIO, TRANSIT, SECONDPLOT, PHOTO2, TRANSIT2, PHOTO3, TRANSIT3, FREE_CABS = range(12)
 
-# функция обратного вызова точки входа в разговор
-# def start(update, _):
-#     update.message.reply_text(
-#         'отправь /plot для графика'
-#         'отправь гороскоп для гороскопа'
-#         'Команда /cancel, чтобы прекратить разговор.\n\n')
 def start(update: Update, context: CallbackContext):
     update.message.reply_text(
         "Привет, это studenthelper. Бот- помощник для студентов муита\n\n"
@@ -49,14 +40,6 @@ def start(update: Update, context: CallbackContext):
         "/cancel - вернуться в меню\n"
         "Десятичная часть отделяется точкой")
     return ConversationHandler.END
-# def start(bot, update):
-#     keyboard = [
-#                 [InlineKeyboardButton("Click button 1", callback_data='callback_1')],
-#                 [InlineKeyboardButton("Click button 1", callback_data='callback_2')]
-#             ]
-#     reply_markup = InlineKeyboardMarkup(keyboard)
-#     message_reply_text = 'Click one of these buttons'
-#     update.message.reply_text(message_reply_text, reply_markup=reply_markup)
 def help(update: Update, context: CallbackContext):
     update.message.reply_text("Доступные команды:-\n"
     "/plot - визуализация возможных исходов оценки за семестр(тотал), на основе других оценок\n"
@@ -67,16 +50,16 @@ def help(update: Update, context: CallbackContext):
     "Десятичная часть отделяется точкой")
     return ConversationHandler.END
 def cancel(update, _):
-    # определяем пользователя
+
     user = update.message.from_user
-    # Пишем в журнал о том, что пользователь не разговорчивый
+
     logger.info("Пользователь %s отменил разговор.", user.first_name)
-    # Отвечаем на отказ поговорить
+
     update.message.reply_text(
         'действие отменено', 
         reply_markup=ReplyKeyboardRemove()
     )
-    # Заканчиваем разговор.
+
     return ConversationHandler.END
 
 def free_cabs(update,context):
@@ -114,7 +97,7 @@ def Monday_submenu(update,context):
     query.answer()
     day = update.callback_query.data.split(',')[0]
     time = update.callback_query.data.split(',')[1]
-    free_cabs = pd.read_excel(r'C:\Users\Dair\Desktop\magnum\Free Cabinets.xlsx', header = 2)#.pivot(index = 'Time', columns = 'Day', values = 'Cabinet')
+    free_cabs = pd.read_excel(r'C:\Users\Dair\Desktop\magnum\Free Cabinets.xlsx', header = 2)#
     free_cabs['Time'] = free_cabs['Time'].apply(lambda x: '0' + x if len(x) < 18 else x)
     free_cabs['begin'] = free_cabs['Time'].apply(lambda x: x[0:8])
     free_cabs['begin'] = pd.to_datetime(free_cabs['begin'], format='%H:%M:%S').dt.time
@@ -163,7 +146,7 @@ def Tuesday_submenu(update,context):
     query.answer()
     day = update.callback_query.data.split(',')[0]
     time = update.callback_query.data.split(',')[1]
-    free_cabs = pd.read_excel(r'C:\Users\Dair\Desktop\magnum\Free Cabinets.xlsx', header = 2)#.pivot(index = 'Time', columns = 'Day', values = 'Cabinet')
+    free_cabs = pd.read_excel(r'C:\Users\Dair\Desktop\magnum\Free Cabinets.xlsx', header = 2)#
     free_cabs['Time'] = free_cabs['Time'].apply(lambda x: '0' + x if len(x) < 18 else x)
     free_cabs['begin'] = free_cabs['Time'].apply(lambda x: x[0:8])
     free_cabs['begin'] = pd.to_datetime(free_cabs['begin'], format='%H:%M:%S').dt.time
@@ -212,7 +195,7 @@ def Wednesday_submenu(update,context):
     query.answer()
     day = update.callback_query.data.split(',')[0]
     time = update.callback_query.data.split(',')[1]
-    free_cabs = pd.read_excel(r'C:\Users\Dair\Desktop\magnum\Free Cabinets.xlsx', header = 2)#.pivot(index = 'Time', columns = 'Day', values = 'Cabinet')
+    free_cabs = pd.read_excel(r'C:\Users\Dair\Desktop\magnum\Free Cabinets.xlsx', header = 2)#
     free_cabs['Time'] = free_cabs['Time'].apply(lambda x: '0' + x if len(x) < 18 else x)
     free_cabs['begin'] = free_cabs['Time'].apply(lambda x: x[0:8])
     free_cabs['begin'] = pd.to_datetime(free_cabs['begin'], format='%H:%M:%S').dt.time
@@ -261,7 +244,7 @@ def Thursday_submenu(update,context):
     query.answer()
     day = update.callback_query.data.split(',')[0]
     time = update.callback_query.data.split(',')[1]
-    free_cabs = pd.read_excel(r'C:\Users\Dair\Desktop\magnum\Free Cabinets.xlsx', header = 2)#.pivot(index = 'Time', columns = 'Day', values = 'Cabinet')
+    free_cabs = pd.read_excel(r'C:\Users\Dair\Desktop\magnum\Free Cabinets.xlsx', header = 2)#
     free_cabs['Time'] = free_cabs['Time'].apply(lambda x: '0' + x if len(x) < 18 else x)
     free_cabs['begin'] = free_cabs['Time'].apply(lambda x: x[0:8])
     free_cabs['begin'] = pd.to_datetime(free_cabs['begin'], format='%H:%M:%S').dt.time
@@ -310,7 +293,7 @@ def Friday_submenu(update,context):
     query.answer()
     day = update.callback_query.data.split(',')[0]
     time = update.callback_query.data.split(',')[1]
-    free_cabs = pd.read_excel(r'C:\Users\Dair\Desktop\magnum\Free Cabinets.xlsx', header = 2)#.pivot(index = 'Time', columns = 'Day', values = 'Cabinet')
+    free_cabs = pd.read_excel(r'C:\Users\Dair\Desktop\magnum\Free Cabinets.xlsx', header = 2)#
     free_cabs['Time'] = free_cabs['Time'].apply(lambda x: '0' + x if len(x) < 18 else x)
     free_cabs['begin'] = free_cabs['Time'].apply(lambda x: x[0:8])
     free_cabs['begin'] = pd.to_datetime(free_cabs['begin'], format='%H:%M:%S').dt.time
@@ -359,7 +342,7 @@ def Saturday_submenu(update,context):
     query.answer()
     day = update.callback_query.data.split(',')[0]
     time = update.callback_query.data.split(',')[1]
-    free_cabs = pd.read_excel(r'C:\Users\Dair\Desktop\magnum\Free Cabinets.xlsx', header = 2)#.pivot(index = 'Time', columns = 'Day', values = 'Cabinet')
+    free_cabs = pd.read_excel(r'C:\Users\Dair\Desktop\magnum\Free Cabinets.xlsx', header = 2)#
     free_cabs['Time'] = free_cabs['Time'].apply(lambda x: '0' + x if len(x) < 18 else x)
     free_cabs['begin'] = free_cabs['Time'].apply(lambda x: x[0:8])
     free_cabs['begin'] = pd.to_datetime(free_cabs['begin'], format='%H:%M:%S').dt.time
@@ -395,76 +378,6 @@ def Saturday_menu_keyboard():
     return InlineKeyboardMarkup(keyboard)
 def Saturday_menu_message():
     return 'Choose time in Saturday menu:'
-
-
-# def free_cabs(update, _):
-#     menu_main = [[InlineKeyboardButton('Понедельник', callback_data='Monday')],
-#                  [InlineKeyboardButton('Вторник', callback_data='Tuesday')],
-#                  [InlineKeyboardButton('Среда', callback_data='Wednesday')],
-#                  [InlineKeyboardButton('Четверг', callback_data='Thursday')],
-#                  [InlineKeyboardButton('Пятница', callback_data='Friday')],
-#                  [InlineKeyboardButton('Суббота', callback_data='Saturday')]
-#                  ]
-#     reply_markup = InlineKeyboardMarkup(menu_main)
-#     update.message.reply_text('Выберете день:', reply_markup=reply_markup)
-
-# def menu_actions(update: Update, context: CallbackContext):
-#     query = update.callback_query
-#     if True:
-#         # first submenu
-#         menu_1 = [[InlineKeyboardButton('Submenu 1-1', callback_data='m1_1')],
-#                   [InlineKeyboardButton('Submenu 1-2', callback_data='m1_2')]]
-#         reply_markup = InlineKeyboardMarkup(menu_1)
-#         bot.edit_message_text(chat_id=query.message.chat_id,
-#                               message_id=query.message.message_id,
-#                               text='Выберете время:',
-#                               reply_markup=reply_markup)
-
-#         update.message.reply_text(''.format(update.callback_query.data))
-# def main_menu(update,context):
-#     # keyboard = [[InlineKeyboardButton("Hackerearth", callback_data='asd'),
-#     #                      InlineKeyboardButton("Hackerrank", callback_data='HRlist8')],
-#     #                     [InlineKeyboardButton("Codechef", callback_data='CClist8'),
-#     #                      InlineKeyboardButton("Spoj", callback_data='SPlist8')],
-#     #                     [InlineKeyboardButton("Codeforces", callback_data='CFlist8'),
-#     #                      InlineKeyboardButton("ALL", callback_data='ALLlist8')]]
-#     # reply_markup = InlineKeyboardMarkup(keyboard)
-#     # update.message.reply_text('please select the judge or select all for showing all',
-#     #                                   reply_markup=reply_markup)
-
-#     # return InlineKeyboardMarkup(keyboard)
-#     query = update.callback_query
-#     query.answer()
-#     query.edit_message_text(
-#                         text=main_menu_message(),
-#                         reply_markup=main_menu_keyboard())
-# def first_submenu(bot, update):
-#   pass
-
-# def first_menu(update,context):
-#   query = update.callback_query
-#   query.answer()
-#   query.edit_message_text(
-#                         text=first_menu_message(),
-#                         reply_markup=first_menu_keyboard())
-# def main_menu_keyboard():
-#   keyboard = [[InlineKeyboardButton('Option 1', callback_data='m1')],
-#               [InlineKeyboardButton('Option 2', callback_data='m2')],
-#               [InlineKeyboardButton('Option 3', callback_data='m3')]]
-#   return InlineKeyboardMarkup(keyboard)
-
-# def first_menu_keyboard():
-#   keyboard = [[InlineKeyboardButton('Submenu 1-1', callback_data='m1_1')],
-#               [InlineKeyboardButton('Submenu 1-2', callback_data='m1_2')],
-#               [InlineKeyboardButton('Main menu', callback_data='main')]]
-#   return InlineKeyboardMarkup(keyboard)
-
-# def main_menu_message():
-#   return 'Choose the option in main menu:'
-
-# def first_menu_message():
-#   return 'Choose the submenu in first menu:'
-
 def how_to_rk1(update, _):
     update.message.reply_photo(
         open('image.psd (2).png','rb'),
@@ -505,55 +418,28 @@ def how_to_rksrd(update, _):
         'Потому-что минимальный балл, который можно получить на экзамене, это 50, что ниже - пересдача'
     )
     return ConversationHandler.END
-# def asd(update, _):
-#     # Список кнопок для ответа
-#     reply_keyboard1 = [['график', 'гороскоп']]
-#     # Создаем простую клавиатуру для ответа
-#     markup_key1 = ReplyKeyboardMarkup(reply_keyboard1, one_time_keyboard=True)
-#     # Начинаем разговор с вопроса
-#     update.message.reply_text(
-#         'отправь график для графика'
-#         'отправь гороскоп для гороскопа'
-#         'Команда /cancel, чтобы прекратить разговор.\n\n',
-#         reply_markup=markup_key1)
-#     # переходим к этапу `GENDER`, это значит, что ответ
-#     # отправленного сообщения в виде кнопок будет список 
-#     # обработчиков, определенных в виде значения ключа `GENDER`
-#     return PLOT
 
 def plot(update, _):
-    # Список кнопок для ответа
-
     reply_keyboard = [['рк1', 'рксрд', 'рк1 и рк2']]
-    # Создаем простую клавиатуру для ответа
+
     markup_key = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
-    # Начинаем разговор с вопроса
-    # update.message.reply_text(
-    #     '',
+
         
-    #         reply_markup=ReplyKeyboardRemove())
-    # reply_keyboard = [
-    #             [InlineKeyboardButton("Click button 1", callback_data='callback_1')],
-    #             [InlineKeyboardButton("Click button 1", callback_data='callback_2')]
-    #         ]
-    # markup_key = InlineKeyboardMarkup(reply_keyboard)
-    # message_reply_text = 'Click one of these buttons'
+
     update.message.reply_text(
         'на основе оценки за какой рк ты хочешь'
         'посмотреть анализ?'
         'Команда /cancel, чтобы прекратить разговор.\n\n',
         reply_markup=markup_key)
-    # переходим к этапу `GENDER`, это значит, что ответ
-    # отправленного сообщения в виде кнопок будет список 
-    # обработчиков, определенных в виде значения ключа `GENDER`
+
     return GENDER
 
 def gender(update, _):
-    # определяем пользователя
+
     user = update.message.from_user
-    # Пишем в журнал пол пользователя
+
     logger.info("выбор %s: %s", user.first_name, update.message.text)
-    # Следующее сообщение с удалением клавиатуры `ReplyKeyboardRemove`
+
     if update.message.text == 'рк1':
         update.message.reply_text(
         'отправь свою оценку за рк1\n /cancel - для отмены', reply_markup=ReplyKeyboardRemove())
@@ -573,7 +459,7 @@ def transit3(update, _):
             'Действие отменено', 
             reply_markup=ReplyKeyboardRemove()
                 )
-            # Заканчиваем разговор.
+        
             return ConversationHandler.END
     update.message.reply_text(
     'отправь свои оценки за рк1 и рк2, еще раз, пожалуйста\n /cancel - для отмены')
@@ -586,9 +472,9 @@ def photo3(update, _):
         temp = 1 / (max(float(rk1) - 50, 0)*(max(100-float(rk1), 0)))
         temp = 1 / (max(float(rk2) - 50, 0)*(max(100-float(rk2), 0)))
         rksrd = 0.5*float(rk1) + float(rk2)*0.5
-    # if 50 <= float(rksrd) <= 100:
-        # pass
-    # else:
+
+    
+
         del temp
     except:
         if update.message.text == '/cancel':
@@ -596,7 +482,7 @@ def photo3(update, _):
             'Действие отменено', 
             reply_markup=ReplyKeyboardRemove()
                 )
-            # Заканчиваем разговор.
+        
             return ConversationHandler.END
         update.message.reply_text('отправьте, пожалуйста, реальне оценки\n (50-100)\n /cancel - для отмены')
         return TRANSIT3
@@ -637,7 +523,7 @@ def transit2(update, _):
             'Действие отменено', 
             reply_markup=ReplyKeyboardRemove()
                 )
-            # Заканчиваем разговор.
+        
             return ConversationHandler.END
     update.message.reply_text(
     'отправь свою оценку за рксрд, еще раз, пожалуйста\n /cancel - для отмены')
@@ -647,9 +533,9 @@ def photo2(update, _):
     try:
         rksrd = re.search(r"(\d+(?:\.\d+)?)", update.message.text.replace(',', '.')).group()
         temp = 1 / (max(float(rksrd) - 50, 0)*(max(100-float(rksrd), 0)))
-    # if 50 <= float(rksrd) <= 100:
-        # pass
-    # else:
+
+    
+
         del temp
     except:
         if update.message.text == '/cancel':
@@ -657,7 +543,7 @@ def photo2(update, _):
             'Действие отменено', 
             reply_markup=ReplyKeyboardRemove()
                 )
-            # Заканчиваем разговор.
+        
             return ConversationHandler.END
         update.message.reply_text('отправьте, пожалуйста, реальную оценку\n (50-100)\n /cancel - для отмены')
         return TRANSIT2
@@ -699,7 +585,7 @@ def transit(update, _):
             'Действие отменено', 
             reply_markup=ReplyKeyboardRemove()
                 )
-            # Заканчиваем разговор.
+        
             return ConversationHandler.END
     update.message.reply_text(
     'отправь свою оценку за рк1, еще раз, пожалуйста\n /cancel - для отмены')
@@ -708,15 +594,13 @@ def transit(update, _):
 def photo(update, _):
     rcParams.update({'figure.autolayout': True})
     user = update.message.from_user
-    # Пишем в журнал пол пользователя
+
     logger.info("Пол %s: %s", user.first_name, update.message.text)
-    # Следующее сообщение с удалением клавиатуры `ReplyKeyboardRemove`
+
     try:
         rk1 = re.search(r"(\d+(?:\.\d+)?)", update.message.text.replace(',', '.')).group()
         temp = 1 / (max(float(rk1) - 50, 0)*(max(100-float(rk1), 0)))
-    # if 50 <= float(rk1) <= 100:
-    #     pass
-    # else:
+
         del temp
     except:
         if update.message.text == '/cancel':
@@ -724,7 +608,7 @@ def photo(update, _):
             'Действие отменено', 
             reply_markup=ReplyKeyboardRemove()
                 )
-            # Заканчиваем разговор.
+        
             return ConversationHandler.END
         update.message.reply_text('отправьте, пожалуйста, реальную оценку\n (50-100)\n /cancel - для отмены')
         return TRANSIT
@@ -761,8 +645,6 @@ def photo(update, _):
     surf = ax.scatter(X, Y, Z, s = 100, c=(qwe*asd*zxc).values, cmap= colors.ListedColormap(['yellow', 'green']), linewidth=0.5)
     ax.scatter(X, Y, Z*0, s = 100, c=(qwe*asd*zxc).values, alpha = 0.3, cmap= colors.ListedColormap(['yellow', 'green']), linewidth=0.5)
     plt.title('Final grade depending \n on the exam and rk2 for %.2f' %float(rk1), size = 60, y=1.09)
-    # chat_id = bot.get_updates()[-1].message.chat_id
-    # bot.send_photo(chat_id, plt)
     buf = io.BytesIO()
     plt.savefig(buf, format='png')
     buf.seek(0)
@@ -808,53 +690,7 @@ def photo(update, _):
         reply_markup=ReplyKeyboardRemove()
     )
     plt.close('all')
-    # update.message.reply_text(user.gender)
-    # переходим к этапу `PHOTO`
     return ConversationHandler.END
-
-# def secondplot(update, _):
-#     x = np.linspace(51,100,10)
-#     y = np.linspace(51,100,10)
-#     X,Y = np.meshgrid(x,y)
-#     a,b,c,d = 0.3, 0.4, -1, -0.3 * float(rk1)
-#     Z = (d - a*X - b*Y) / c
-#     zxc = pd.DataFrame(Z)
-#     for i in pd.DataFrame(Z).columns:
-#         zxc[i] = zxc[i].apply(lambda x : 0 if x <= 50 else (1 if x <= 70 else 2))
-#     asd = pd.DataFrame(Y)
-#     for i in pd.DataFrame(Z).columns:
-#         asd[i] = asd[i].apply(lambda x : 0 if x <= 50 else 1)
-#     qwe = pd.DataFrame(X)
-#     for i in pd.DataFrame(X).columns:
-#         qwe[i] = qwe[i].apply(lambda x : 0 if x <= 50 else 1)
-#     g = sns.heatmap(pd.DataFrame((qwe*asd*zxc).values,
-#                              columns = [x[0] for x in X],
-#                              index = [x[0] for x in Y]),
-#                 cmap= colors.ListedColormap([ 'yellow', 'green']),
-#                 cbar=False,
-#                 linewidths=4
-#                )
-#     g.set_xticks(range(10))
-#     g.set_xticklabels([x for x in np.arange(50,100, 5)], size = 60, rotation = -45)
-#     g.set_yticks(range(10))
-#     g.set_yticklabels([x for x in np.arange(50,100, 5)], size = 60)
-#     plt.gcf().set_size_inches(20, 15)
-#     plt.ylabel('Exam',  size = 60, rotation = 0, labelpad=100)
-#     plt.xlabel('Рк2',  size = 60)
-#     plt.title('Final grade depending on the exam and rk2', size = 80, y=1.09)
-#     buf = io.BytesIO()
-#     plt.savefig(buf, format='png')
-#     buf.seek(0)
-#     update.message.reply_photo(
-#         buf,
-#         reply_markup=ReplyKeyboardRemove(),
-#     )
-#     # update.message.reply_text(user.gender)
-#     # переходим к этапу `PHOTO`
-#     return ConversationHandler.END
-
-# updater = Updater("5637376738:AAEliHovXHBx6O_0pKcIRePBgEOR8S9N8xU",
-#                   use_context=True)
 def unknown_text(update: Update, context: CallbackContext):
     update.message.reply_text(
         "Извини, я не понимаю, о чем ты '%s'" % update.message.text)
@@ -863,43 +699,16 @@ def unknown_text(update: Update, context: CallbackContext):
 def unknown(update: Update, context: CallbackContext):
     update.message.reply_text(
         "Извини, но нет такой команды %s" % update.message.text)
-
-# def press_button_callback(bot, update):
-#     seed(1)
-#     random_number = str(random())
-#     keyboard = [
-#                 [InlineKeyboardButton('Click button 1' , callback_data='callback_1')],
-#                 [InlineKeyboardButton('Click button 1 ' + random_number, callback_data='callback_2')]
-#             ]
-
-#     reply_markup = InlineKeyboardMarkup(keyboard)
-#     update.callback_query.edit_message_reply_markup(reply_markup)
 if __name__ == '__main__':
-    # Создаем Updater и передаем ему токен вашего бота.
-    updater = Updater("5637376738:AAEliHovXHBx6O_0pKcIRePBgEOR8S9N8xU")
-    # получаем диспетчера для регистрации обработчиков
-    dispatcher = updater.dispatcher
 
-    # updater.dispatcher.add_handler(CallbackQueryHandler(press_button_callback))
-    # Определяем обработчик разговоров `ConversationHandler` 
-    # с состояниями GENDER, PHOTO, LOCATION и BIO
-    # conv_handler = ConversationHandler( # здесь строится логика разговора
-    #     # точка входа в разговор
-    #     entry_points=[CommandHandler('start', start)],
-    #     # этапы разговора, каждый со своим списком обработчиков сообщений
-    #     states={
-    #         PLOT : [MessageHandler(Filters.regex('^(график|гороскоп)$'), plot)],
-    #         GENDER: [MessageHandler(Filters.regex('^(рк1|рксрд|рк1 и рк2)$'), gender)]
-    #     },
-    #     # точка выхода из разговора
-    #     fallbacks=[CommandHandler('cancel', cancel)],
-    #     run_async=True
-    # )
+    updater = Updater("5637376738:AAEliHovXHBx6O_0pKcIRePBgEOR8S9N8xU")
+
+    dispatcher = updater.dispatcher
     updater.dispatcher.add_handler(CommandHandler('start', start))
     updater.dispatcher.add_handler(CommandHandler('help', help))
     updater.dispatcher.add_handler(CommandHandler('how_to_rk1', how_to_rk1))
     updater.dispatcher.add_handler(CommandHandler('how_to_rksrd', how_to_rksrd))
-    # updater.dispatcher.add_handler(CommandHandler('free_cabs', free_cabs))
+
     updater.dispatcher.add_handler(CommandHandler('start', start))
     dispatcher.add_handler(CommandHandler('free_cabs', free_cabs))
     updater.dispatcher.add_handler(CallbackQueryHandler(main_menu, pattern='^main$'))
@@ -923,21 +732,13 @@ if __name__ == '__main__':
     updater.dispatcher.add_handler(CallbackQueryHandler(Saturday_submenu,
                                                         pattern=''))
 
-    # dispatcher.add_handler(CallbackQueryHandler(menu_actions))
-    # updater.dispatcher.add_handler(CommandHandler('main_menu', main_menu))
-    # updater.dispatcher.add_handler(CallbackQueryHandler(first_menu, pattern='m1'))
-    # # updater.dispatcher.add_handler(CallbackQueryHandler(second_menu, pattern='m2'))
-    # updater.dispatcher.add_handler(CallbackQueryHandler(first_submenu,
-    #                                                     pattern='m1_1'))
-    # updater.dispatcher.add_handler(CallbackQueryHandler(second_submenu,
-    #                                                     pattern='m2_1'))
-    conv_handler2 = ConversationHandler( # здесь строится логика разговора
-        # точка входа в разговор
+    conv_handler2 = ConversationHandler( #
+    
         entry_points=[CommandHandler('plot', plot)],
-        # этапы разговора, каждый со своим списком обработчиков сообщений
+    
         states={
             PLOT : [MessageHandler(Filters.regex('^(график)$'), plot)],
-            # GENDER: [MessageHandler(Filters.regex('^(рк1|рксрд|рк1 и рк2)$'), gender)],
+        
             GENDER: [MessageHandler(Filters.regex(''), gender)],
             PHOTO: [MessageHandler(Filters.regex(''), photo)],
             TRANSIT : [MessageHandler(Filters.regex(''), transit)],
@@ -946,85 +747,14 @@ if __name__ == '__main__':
             PHOTO3: [MessageHandler(Filters.regex(''), photo3)],
             TRANSIT3 : [MessageHandler(Filters.regex(''), transit3)]
         },
-        # точка выхода из разговора
+    
         fallbacks=[CommandHandler('cancel', cancel)],
         run_async=True
     )
-    # def handle_error(error, update):
-    #     tb = traceback.format_exc()
-    #     print("got the error:" + str(error)+"\nMore info:" + str(tb) , error=True)
-    #     print(tb)
-    #     message = "Ops! Error😞"
-    #     keyboard = [[InlineKeyboardButton("Close❌", callback_data='cancel')],
-    #                 [InlineKeyboardButton("Menù🏠↩️", callback_data='help')]]
-    #     reply_markup = InlineKeyboardMarkup(keyboard,
-    #                                     one_time_keyboard=True,
-    #                                     resize_keyboard=True)
-    #     if update.message != None:
-    #         update.message.reply_text(message, reply_markup=reply_markup,parse_mode=ParseMode.HTML)
-    #     else:
-    #         updater.bot.answerCallbackQuery(update.callback_query.id)
-    #         update.callback_query.edit_message_text(message, reply_markup=reply_markup,parse_mode=ParseMode.HTML)
-
-    #     return HANDLE_ERROR
-    # Добавляем обработчик разговоров `conv_handler`
-    # dispatcher.add_handler(conv_handler)
-
     dispatcher.add_handler(conv_handler2)
-    # dispatcher.add_error_handler(error)
-    # dispatcher.add_error_handler(handle_error)
     updater.dispatcher.add_handler(MessageHandler(Filters.command, unknown))
   
-# Filters out unknown messages.
     updater.dispatcher.add_handler(MessageHandler(Filters.text, unknown_text))
-    # Запуск бота
+
     updater.start_polling()
     updater.idle()
-# def start(update: Update, context: CallbackContext):
-#     update.message.reply_text(
-#         "Enter the text you want to show to the user whenever they start the bot")
-
-# def help(update: Update, context: CallbackContext):
-#     update.message.reply_text("Your Message")
-
-# def score_on_rk1(update: Update, context: CallbackContext):
-#     update.message.reply_text("Напишите оценку за рк1")
-#     time.sleep(5)
-#     update.message.reply_text(update.message.text)
-    
-# def gmail_url(update: Update, context: CallbackContext):
-#     update.message.reply_text("gmail link here")
-
-# def youtube_url(update: Update, context: CallbackContext):
-#     update.message.reply_text("youtube link")
-    
-# def linkedIn_url(update: Update, context: CallbackContext):
-#     update.message.reply_text("Your linkedin profile url")
-
-# def geeks_url(update: Update, context: CallbackContext):
-#     update.message.reply_text("GeeksforGeeks url here")
-
-# def unknown_text(update: Update, context: CallbackContext):
-#     update.message.reply_text(
-#         "Sorry I can't recognize you , you said '%s'" % update.message.text)
-
-# def unknown(update: Update, context: CallbackContext):
-#     update.message.reply_text(
-#         "Sorry '%s' is not a valid command" % update.message.text)
-
-# updater.dispatcher.add_handler(CommandHandler('start', start))
-# updater.dispatcher.add_handler(CommandHandler('youtube', youtube_url))
-# updater.dispatcher.add_handler(CommandHandler('help', help))
-# updater.dispatcher.add_handler(CommandHandler('linkedin', linkedIn_url))
-# updater.dispatcher.add_handler(CommandHandler('gmail', gmail_url))
-# updater.dispatcher.add_handler(CommandHandler('geeks', geeks_url))
-# updater.dispatcher.add_handler(CommandHandler('huy', score_on_rk1))
-# updater.dispatcher.add_handler(MessageHandler(Filters.text, unknown))
-# updater.dispatcher.add_handler(MessageHandler(
-#     # Filters out unknown commands
-#     Filters.command, unknown))
-  
-# # Filters out unknown messages.
-# updater.dispatcher.add_handler(MessageHandler(Filters.text, unknown_text))
-
-# updater.start_polling()

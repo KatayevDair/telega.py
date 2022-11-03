@@ -1,0 +1,2 @@
+BOT_TOKEN = ""
+YOUR_PATH = ""
